@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Domain.Base
 {
-    public class Entidade
+    public abstract class Entidade
     {
         public Entidade()
         {
