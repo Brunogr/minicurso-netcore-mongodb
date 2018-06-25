@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minicurso.NetCore.MongoDB.WebApi", "Minicurso.NetCore.MongoDB.WebApi\Minicurso.NetCore.MongoDB.WebApi.csproj", "{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minicurso.NetCore.MongoDB.Domain", "Minicurso.NetCore.MongoDB.Domain\Minicurso.NetCore.MongoDB.Domain.csproj", "{5051401E-9437-4F0E-A6A5-0C39943EAD32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - WebApi", "1 - WebApi", "{069C1257-7909-4299-A3F6-B07D4B0FEB12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{31E40335-FBCE-4C86-89D6-8EFF1755446C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Application", "3 - Application", "{C020BBC6-300C-4CCF-8233-B886E90E487F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minicurso.NetCore.MongoDB.Application", "Minicurso.NetCore.MongoDB.Application\Minicurso.NetCore.MongoDB.Application.csproj", "{84B059C2-D07C-4E2F-9433-CC97AF68A50A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Repository", "4 - Repository", "{0B009CFE-963F-4C0F-A050-9AF25C60DDFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minicurso.NetCore.MongoDB.Infra.Data", "Minicurso.NetCore.MongoDB.Infra.Data\Minicurso.NetCore.MongoDB.Infra.Data.csproj", "{E4DE8AC4-509B-47B6-A884-0CE0C607F889}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5051401E-9437-4F0E-A6A5-0C39943EAD32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5051401E-9437-4F0E-A6A5-0C39943EAD32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5051401E-9437-4F0E-A6A5-0C39943EAD32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5051401E-9437-4F0E-A6A5-0C39943EAD32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84B059C2-D07C-4E2F-9433-CC97AF68A50A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84B059C2-D07C-4E2F-9433-CC97AF68A50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84B059C2-D07C-4E2F-9433-CC97AF68A50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84B059C2-D07C-4E2F-9433-CC97AF68A50A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4DE8AC4-509B-47B6-A884-0CE0C607F889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4DE8AC4-509B-47B6-A884-0CE0C607F889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4DE8AC4-509B-47B6-A884-0CE0C607F889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4DE8AC4-509B-47B6-A884-0CE0C607F889}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EEBD1E97-E9AA-448F-8B5E-2FC99EA806B2} = {069C1257-7909-4299-A3F6-B07D4B0FEB12}
+		{5051401E-9437-4F0E-A6A5-0C39943EAD32} = {31E40335-FBCE-4C86-89D6-8EFF1755446C}
+		{84B059C2-D07C-4E2F-9433-CC97AF68A50A} = {C020BBC6-300C-4CCF-8233-B886E90E487F}
+		{E4DE8AC4-509B-47B6-A884-0CE0C607F889} = {0B009CFE-963F-4C0F-A050-9AF25C60DDFF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FA28B04-D2B7-447E-B0B2-232B5EE48749}
+	EndGlobalSection
+EndGlobal
