@@ -1,3 +1,5 @@
-minicurso-netcore-mongodb
+Minicurso - Introdução a Banco de dados no SQL com dotnet core
 
-<img src="/imagens/minicurso-mongodb.jpg?raw=true" width="220">
+Modelo a ser construído:
+
+<img src="/imagens/minicurso-mongodb.jpg?raw=true" width="1500">
