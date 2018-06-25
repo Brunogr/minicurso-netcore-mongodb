@@ -1,4 +1,4 @@
-# Minicurso - Introdução a Banco de dados no SQL com dotnet core
+# Minicurso - Introdução a Banco de dados NoSQL com dotnet core e MongoDB
 
 Modelo a ser construído:
 
