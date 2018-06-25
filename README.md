@@ -1,3 +1,3 @@
 minicurso-netcore-mongodb
 
-<img src="/imagens/minicurso-mongodb.jpeg?raw=true" width="220">
+<img src="/imagens/minicurso-mongodb.jpg?raw=true" width="220">
