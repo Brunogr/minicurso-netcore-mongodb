@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Application.ViewModels
 {
-    public class AdicionarItemPedidoViewModel
+    public class AdicionarItemPedidoModel
     {
-        public AdicionarItemPedidoViewModel()
+        public AdicionarItemPedidoModel()
         {
-            Itens = new List<ItemPedidoViewModel>();
+            Itens = new List<ItemPedidoModel>();
         }
 
         public Guid PedidoId;
-        public List<ItemPedidoViewModel> Itens;
+        public List<ItemPedidoModel> Itens;
     }
 }

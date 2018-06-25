@@ -17,7 +17,7 @@ namespace Minicurso.NetCore.MongoDB.Application
         }
 
 
-        public Pedido AdicionarItem(Guid id, ItemPedidoViewModel viewModel)
+        public Pedido AdicionarItem(Guid id, ItemPedidoModel viewModel)
         {
             var pedido = _pedidoRepository.Get(id);
 
@@ -32,7 +32,7 @@ namespace Minicurso.NetCore.MongoDB.Application
             return pedido;
         }
 
-        public Pedido CriarPedido(CriarPedidoViewModel viewModel)
+        public Pedido CriarPedido(CriarPedidoModel viewModel)
         {
             var atendente = new Atendente(viewModel.atendente.Nome, viewModel.atendente.Cpf);
             var pedido = new Pedido(viewModel.Mesa, atendente);

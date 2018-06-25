@@ -66,7 +66,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public Pedido Post([FromBody]CriarPedidoViewModel value)
+        public Pedido Post([FromBody]CriarPedidoModel value)
         {
             return _pedidoService.CriarPedido(value);
         }
@@ -78,7 +78,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// <param name="item">Item a ser adicionado.</param>
         /// <returns></returns>
         [HttpPut("{id}/Item")]
-        public Pedido Put(Guid id, [FromBody]ItemPedidoViewModel item)
+        public Pedido Put(Guid id, [FromBody]ItemPedidoModel item)
         {
             return _pedidoService.AdicionarItem(id, item);
         }

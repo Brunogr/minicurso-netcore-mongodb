@@ -8,9 +8,9 @@ namespace Minicurso.NetCore.MongoDB.Application.Interface
 {
     public interface IPedidoService
     {
-        Pedido CriarPedido(CriarPedidoViewModel viewModel);
+        Pedido CriarPedido(CriarPedidoModel viewModel);
 
-        Pedido AdicionarItem(Guid id, ItemPedidoViewModel viewModel);
+        Pedido AdicionarItem(Guid id, ItemPedidoModel viewModel);
 
         Pedido EfetuarPagamento(Guid id, decimal valor);
     }

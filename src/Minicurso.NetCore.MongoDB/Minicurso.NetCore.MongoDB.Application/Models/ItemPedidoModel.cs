@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Application.ViewModels
 {
-    public class ItemPedidoViewModel
+    public class ItemPedidoModel
     {
         public int quantidade;
-        public ProdutoViewModel produto;
+        public ProdutoModel produto;
     }
 }

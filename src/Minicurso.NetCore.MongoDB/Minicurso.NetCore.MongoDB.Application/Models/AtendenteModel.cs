@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Application.ViewModels
 {
-    public class AtendenteViewModel
+    public class AtendenteModel
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
