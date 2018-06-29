@@ -11,7 +11,7 @@ using Minicurso.NetCore.MongoDB.Infra.Data.Interfaces;
 
 namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class PedidoController : Controller
     {
         IPedidoService _pedidoService;
