@@ -12,12 +12,12 @@ using Minicurso.NetCore.MongoDB.Infra.Data.Interfaces;
 namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class PedidoController : Controller
+    public class ComandaController : Controller
     {
-        IPedidoService _pedidoService;
-        IPedidoRepository _pedidoRepository;
+        IComandaSerive _pedidoService;
+        IComandaRepository _pedidoRepository;
 
-        public PedidoController(IPedidoService pedidoService, IPedidoRepository pedidoRepository)
+        public ComandaController(IComandaSerive pedidoService, IComandaRepository pedidoRepository)
         {
             _pedidoService = pedidoService;
             _pedidoRepository = pedidoRepository;
@@ -28,7 +28,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// </summary>
         /// <returns>Lista de pedidos.</returns>
         [HttpGet]
-        public List<Pedido> Get()
+        public List<Comanda> Get()
         {
             return _pedidoRepository.GetAll();
         }
@@ -38,7 +38,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// </summary>
         /// <returns>Lista de pedidos ativos.</returns>
         [HttpGet("Mesa/{numeroMesa}")]
-        public List<Pedido> GetAtivos(int numeroMesa)
+        public List<Comanda> GetAtivos(int numeroMesa)
         {
             return _pedidoRepository.GetByFilter(p => p.Mesa == numeroMesa && p.Ativo);
         }
@@ -48,7 +48,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// </summary>
         /// <returns>Lista de pedidos fechados.</returns>
         [HttpGet("Mesa/{numeroMesa}/Fechado")]
-        public List<Pedido> GetFechados(int numeroMesa)
+        public List<Comanda> GetFechados(int numeroMesa)
         {
             return _pedidoRepository.GetByFilter(p => p.Mesa == numeroMesa && !p.Ativo);
         }
@@ -59,16 +59,16 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// <param name="id">Id do pedido.</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public Pedido Get(Guid id)
+        public Comanda Get(Guid id)
         {
             return _pedidoRepository.Get(id);
         }
 
         // POST api/values
         [HttpPost]
-        public Pedido Post([FromBody]CriarPedidoModel value)
+        public Comanda Post([FromBody]CriarComandaModel value)
         {
-            return _pedidoService.CriarPedido(value);
+            return _pedidoService.CriarComanda(value);
         }
 
         /// <summary>
@@ -78,13 +78,13 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// <param name="item">Item a ser adicionado.</param>
         /// <returns></returns>
         [HttpPut("{id}/Item")]
-        public Pedido Put(Guid id, [FromBody]ItemPedidoModel item)
+        public Comanda Put(Guid id, [FromBody]ItemPedidoModel item)
         {
             return _pedidoService.AdicionarItem(id, item);
         }
 
         [HttpPut("{id}/Pagar/{valor}")]
-        public Pedido Put(Guid id, decimal valor)
+        public Comanda Put(Guid id, decimal valor)
         {
             return _pedidoService.EfetuarPagamento(id, valor);
         }

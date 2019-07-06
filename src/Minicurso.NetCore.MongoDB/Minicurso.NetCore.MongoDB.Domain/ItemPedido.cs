@@ -9,12 +9,12 @@ namespace Minicurso.NetCore.MongoDB.Domain
     {
         public ItemPedido(Produto produto, int quantidade)
         {
-            Produto = produto;
+            Produto = produto ?? throw new Exception("Produto não pode ser nulo!");
             Quantidade = quantidade;
         }
 
         public Produto Produto { get; private set; }
-        public int Quantidade { get; private set; }
+        public int Quantidade { get; set; }
         public decimal Valor {
             get
             {

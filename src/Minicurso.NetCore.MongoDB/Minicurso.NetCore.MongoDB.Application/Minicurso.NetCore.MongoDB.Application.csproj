@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Minicurso.NetCore.MongoDB.Domain\Minicurso.NetCore.MongoDB.Domain.csproj" />
     <ProjectReference Include="..\Minicurso.NetCore.MongoDB.Infra.Data\Minicurso.NetCore.MongoDB.Infra.Data.csproj" />
   </ItemGroup>
