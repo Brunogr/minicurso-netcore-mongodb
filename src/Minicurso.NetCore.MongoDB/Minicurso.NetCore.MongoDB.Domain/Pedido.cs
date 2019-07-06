@@ -62,19 +62,10 @@ namespace Minicurso.NetCore.MongoDB.Domain
 
         public void EfetuarPagamento(decimal valor)
         {
-            if (valor <= ValorTotal)
-                ValorPago = Math.Round(ValorPago + valor,2);
-
-            Fechar();
         }
 
         public void Fechar()
         {
-            if (Ativo && ValorPago >= ValorTotal)
-            {
-                Ativo = false;
-                DataFechamento = DateTime.Now;
-            }
         }        
     }
 }
