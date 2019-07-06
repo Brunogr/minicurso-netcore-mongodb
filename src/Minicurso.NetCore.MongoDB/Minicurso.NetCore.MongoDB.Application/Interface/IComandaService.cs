@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Application.Interface
 {
-    public interface IPedidoService
+    public interface IComandaService
     {
-        Pedido CriarPedido(CriarPedidoModel viewModel);
+        Comanda CriarComanda(CriarComandaModel viewModel);
 
-        Pedido AdicionarItem(Guid id, ItemPedidoModel viewModel);
+        Comanda AdicionarItem(Guid id, ItemPedidoModel viewModel);
 
-        Pedido EfetuarPagamento(Guid id, decimal valor);
+        Comanda EfetuarPagamento(Guid id, decimal valor);
     }
 }

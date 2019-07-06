@@ -14,7 +14,7 @@ namespace Minicurso.NetCore.MongoDB.Domain
         }
 
         public Produto Produto { get; private set; }
-        public int Quantidade { get; private set; }
+        public int Quantidade { get; set; }
         public decimal Valor {
             get
             {

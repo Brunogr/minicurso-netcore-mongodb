@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Domain
 {
-    public class Pedido : Entidade
+    public class Comanda : Entidade
     {
-        protected Pedido()
+        protected Comanda()
         {
 
         }
 
-        public Pedido(int mesa, Atendente atendente)
+        public Comanda(int mesa, Atendente atendente)
         {
             Mesa = mesa;
             Atendente = atendente;
@@ -49,7 +49,12 @@ namespace Minicurso.NetCore.MongoDB.Domain
             if (!Ativo)
                 throw new Exception("O pedido já foi fechado!");
 
-            Pedidos.Add(item);
+            var pedido = Pedidos.FirstOrDefault(p => p.Produto.Nome == item.Produto.Nome);
+
+            if (pedido != null)
+                pedido.Quantidade += item.Quantidade;
+            else
+                Pedidos.Add(item);
         }
 
         public void RemoverItem(ItemPedido item)
@@ -57,15 +62,32 @@ namespace Minicurso.NetCore.MongoDB.Domain
             if (!Ativo)
                 throw new Exception("O pedido já foi fechado!");
 
-            Pedidos.Remove(item);
+            var pedido = Pedidos.FirstOrDefault(p => p.Produto.Nome == item.Produto.Nome);
+
+            if (pedido != null)
+                pedido.Quantidade -= item.Quantidade;
+            else
+                Pedidos.Remove(item);
         }
 
         public void EfetuarPagamento(decimal valor)
         {
+            if (!Ativo)
+                throw new Exception("Não é possível efetuar pagamento em comanda inativa");
+
+            ValorPago += valor;
+
+            if (ValorPago >= ValorTotal)
+                Fechar();
         }
 
         public void Fechar()
         {
+            if (!Ativo && ValorTotal >= ValorPago)
+                throw new Exception("Não é possivel fechar a conta");
+
+            Ativo = false;
+            DataFechamento = DateTime.Now;
         }        
     }
 }
