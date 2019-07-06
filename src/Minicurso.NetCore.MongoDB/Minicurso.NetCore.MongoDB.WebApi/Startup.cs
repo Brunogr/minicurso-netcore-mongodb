@@ -71,8 +71,6 @@ namespace Minicurso.NetCore.MongoDB.WebApi
 
         public void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<IPedidoService, PedidoService>();
-            services.AddScoped<IPedidoRepository, PedidoRepository>();
         }
     }
 }
