@@ -63,7 +63,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "/swagger/ui";
+                c.RoutePrefix = "swagger/ui";
             });
 
             app.UseMvc();
@@ -73,7 +73,10 @@ namespace Minicurso.NetCore.MongoDB.WebApi
         {
             services
                 .AddApplication()
-                .AddData();
+                .AddData(config =>
+                    config.AddConnectionString(Configuration["ConnectionString"])
+                    .AddDatabaseName(Configuration["DatabaseName"])
+                );
         }
 
     }

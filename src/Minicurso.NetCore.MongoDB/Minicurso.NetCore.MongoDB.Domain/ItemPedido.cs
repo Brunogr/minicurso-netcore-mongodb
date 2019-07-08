@@ -9,6 +9,9 @@ namespace Minicurso.NetCore.MongoDB.Domain
     {
         public ItemPedido(Produto produto, int quantidade)
         {
+            if (produto == null)
+                throw new Exception("Produto não pode ser nulo");
+
             Produto = produto;
             Quantidade = quantidade;
         }
