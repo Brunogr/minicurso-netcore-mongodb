@@ -49,12 +49,12 @@ namespace Minicurso.NetCore.MongoDB.Domain
             if (!Ativo)
                 throw new Exception("O pedido já foi fechado!");
 
-            var pedido = Pedidos.FirstOrDefault(p => p.Produto.Nome == item.Produto.Nome);
+            var pedido = Pedidos.SingleOrDefault(p => p.Item.Nome == item.Item.Nome);
 
             if (pedido != null)
                 pedido.Quantidade += item.Quantidade;
             else
-                Pedidos.Add(pedido);
+                Pedidos.Add(item);
         }
 
         public void RemoverItem(ItemPedido item)
@@ -62,12 +62,12 @@ namespace Minicurso.NetCore.MongoDB.Domain
             if (!Ativo)
                 throw new Exception("O pedido já foi fechado!");
 
-            var pedido = Pedidos.FirstOrDefault(p => p.Produto.Nome == item.Produto.Nome);
+            var pedido = Pedidos.SingleOrDefault(p => p.Item.Nome == item.Item.Nome);
 
             if (pedido != null)
                 pedido.Quantidade -= item.Quantidade;
             else
-                Pedidos.Remove(pedido);
+                Pedidos.Remove(item);
         }
 
         public void EfetuarPagamento(decimal valor)

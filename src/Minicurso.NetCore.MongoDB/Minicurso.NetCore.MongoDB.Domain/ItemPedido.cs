@@ -1,4 +1,5 @@
 ﻿using Minicurso.NetCore.MongoDB.Domain.Base;
+using Minicurso.NetCore.MongoDB.Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,18 +8,22 @@ namespace Minicurso.NetCore.MongoDB.Domain
 {
     public class ItemPedido : Entidade
     {
-        public ItemPedido(Produto produto, int quantidade)
+        public ItemPedido(IItem item, int quantidade)
         {
-            Produto = produto ?? throw new Exception("Produto não pode ser nulo!");
+            Item = item ?? throw new Exception("Produto não pode ser nulo!");
             Quantidade = quantidade;
         }
 
-        public Produto Produto { get; private set; }
+        public IItem Item { get; private set; }
         public int Quantidade { get; set; }
-        public decimal Valor {
+        public decimal Valor
+        {
             get
             {
-                return Math.Round(Produto.Valor * Quantidade, 2);
+                if (Item is Desconto)
+                    return Math.Round((Item.Valor * (-1)) * Quantidade, 2);
+
+                return Math.Round(Item.Valor * Quantidade, 2);
             }
         }
     }

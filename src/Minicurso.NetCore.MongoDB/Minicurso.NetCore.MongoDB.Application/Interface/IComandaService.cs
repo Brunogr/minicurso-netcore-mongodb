@@ -10,7 +10,9 @@ namespace Minicurso.NetCore.MongoDB.Application.Interface
     {
         Comanda CriarComanda(CriarComandaModel viewModel);
 
-        Comanda AdicionarItem(Guid id, ItemPedidoModel viewModel);
+        Comanda AdicionarProduto(Guid id, ItemPedidoModel viewModel);
+        Comanda AdicionarDesconto(Guid id, ItemPedidoModel viewModel);
+        Comanda AdicionarTaxa(Guid id, ItemPedidoModel viewModel);
 
         Comanda EfetuarPagamento(Guid id, decimal valor);
     }

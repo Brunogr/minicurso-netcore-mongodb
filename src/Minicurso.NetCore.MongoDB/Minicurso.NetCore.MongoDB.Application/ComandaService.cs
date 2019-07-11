@@ -1,6 +1,7 @@
 ﻿using Minicurso.NetCore.MongoDB.Application.Interface;
 using Minicurso.NetCore.MongoDB.Application.ViewModels;
 using Minicurso.NetCore.MongoDB.Domain;
+using Minicurso.NetCore.MongoDB.Domain.Interface;
 using Minicurso.NetCore.MongoDB.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,39 @@ namespace Minicurso.NetCore.MongoDB.Application
             this.comandaRepository = comandaRepository;
         }
 
-        public Comanda AdicionarItem(Guid id, ItemPedidoModel viewModel)
+        public Comanda AdicionarProduto(Guid id, ItemPedidoModel viewModel)
         {
             var comanda = comandaRepository.Get(id);
-            var produto = new Produto(viewModel.produto.Nome, viewModel.produto.Valor);
+            var produto = new Produto(viewModel.item.Nome, viewModel.item.Valor);
             ItemPedido item = new ItemPedido(produto, viewModel.quantidade);
+
             comanda.AdicionarItem(item);
 
+            return SalvarComanda(comanda);
+        }
+
+        public Comanda AdicionarDesconto(Guid id, ItemPedidoModel viewModel)
+        {
+            var comanda = comandaRepository.Get(id);
+            var desconto = new Desconto(viewModel.item.Nome, viewModel.item.Valor);
+            ItemPedido item = new ItemPedido(desconto, viewModel.quantidade);
+
+            comanda.AdicionarItem(item);
+
+            return SalvarComanda(comanda);
+        }
+        public Comanda AdicionarTaxa(Guid id, ItemPedidoModel viewModel)
+        {
+            var comanda = comandaRepository.Get(id);
+            var taxa = new Taxa(viewModel.item.Nome, viewModel.item.Valor);
+            ItemPedido item = new ItemPedido(taxa, viewModel.quantidade);
+
+            comanda.AdicionarItem(item);
+            return SalvarComanda(comanda);
+        }
+
+        private Comanda SalvarComanda(Comanda comanda)
+        {
             comandaRepository.Update(comanda);
             return comanda;
         }

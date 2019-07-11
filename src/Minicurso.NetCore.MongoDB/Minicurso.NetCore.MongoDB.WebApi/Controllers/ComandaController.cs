@@ -72,15 +72,24 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         }
 
         /// <summary>
-        /// Método para adicionar um item ao pedido.
+        /// Método para adicionar um produto ao pedido.
         /// </summary>
         /// <param name="id">Id do pedido.</param>
-        /// <param name="item">Item a ser adicionado.</param>
+        /// <param name="itemPedido">Item a ser adicionado.</param>
         /// <returns></returns>
         [HttpPut("{id}/Item")]
-        public Comanda Put(Guid id, [FromBody]ItemPedidoModel item)
+        public Comanda Put(Guid id, [FromBody]ItemPedidoModel itemPedido)
         {
-            return _pedidoService.AdicionarItem(id, item);
+            switch (itemPedido.tipo)
+            {
+                case ItemPedidoModel.Tipo.Desconto:
+                    return _pedidoService.AdicionarDesconto(id, itemPedido);
+                case ItemPedidoModel.Tipo.Taxa:
+                    return _pedidoService.AdicionarTaxa(id, itemPedido);
+                case ItemPedidoModel.Tipo.Produto:
+                default:
+                    return _pedidoService.AdicionarProduto(id, itemPedido);
+            }
         }
 
         [HttpPut("{id}/Pagar/{valor}")]

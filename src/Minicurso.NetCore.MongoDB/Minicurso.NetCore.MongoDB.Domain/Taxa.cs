@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Domain
 {
-    public class Produto : Entidade, IItem
+    public class Taxa : Entidade, IItem
     {
-        public Produto(string nome, decimal valor)
+        public Taxa(string nome, decimal valor)
         {
             Nome = nome;
             Valor = valor;
