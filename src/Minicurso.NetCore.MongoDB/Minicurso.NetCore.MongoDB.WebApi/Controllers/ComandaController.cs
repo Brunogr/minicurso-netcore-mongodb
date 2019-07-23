@@ -72,7 +72,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         }
 
         /// <summary>
-        /// Método para adicionar um produto ao pedido.
+        /// Método para adicionar um item a comanda.
         /// </summary>
         /// <param name="id">Id do pedido.</param>
         /// <param name="itemPedido">Item a ser adicionado.</param>

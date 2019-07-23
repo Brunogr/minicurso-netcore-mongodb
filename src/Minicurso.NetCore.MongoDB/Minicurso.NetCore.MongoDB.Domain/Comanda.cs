@@ -28,6 +28,7 @@ namespace Minicurso.NetCore.MongoDB.Domain
         public DateTime DataAbertura { get; private set; }
         public DateTime? DataFechamento { get; private set; }
         public List<ItemPedido> Pedidos { get; private set; }
+        public List<ItemCozinha> Cozinha { get; private set; }
         public bool Ativo { get; private set; }
         public decimal ValorTotal
         {
@@ -55,6 +56,17 @@ namespace Minicurso.NetCore.MongoDB.Domain
                 pedido.Quantidade += item.Quantidade;
             else
                 Pedidos.Add(item);
+
+            if (pedido.PrepararCozinha)
+                AdicionarItemCozinha(new ItemCozinha(pedido, Id));
+        }
+
+        public void AdicionarItemCozinha(ItemCozinha item)
+        {
+            if (!Ativo)
+                throw new Exception("A Comanda já foi fechada!");
+
+            Cozinha.Add(item);
         }
 
         public void RemoverItem(ItemPedido item)

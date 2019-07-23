@@ -23,7 +23,7 @@ namespace Minicurso.NetCore.MongoDB.Application
         {
             var comanda = comandaRepository.Get(id);
             var produto = new Produto(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(produto, viewModel.quantidade);
+            ItemPedido item = new ItemPedido(produto, viewModel.quantidade, viewModel.prepararCozinha);
 
             comanda.AdicionarItem(item);
 
@@ -34,7 +34,7 @@ namespace Minicurso.NetCore.MongoDB.Application
         {
             var comanda = comandaRepository.Get(id);
             var desconto = new Desconto(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(desconto, viewModel.quantidade);
+            ItemPedido item = new ItemPedido(desconto, viewModel.quantidade, viewModel.prepararCozinha);
 
             comanda.AdicionarItem(item);
 
@@ -44,7 +44,7 @@ namespace Minicurso.NetCore.MongoDB.Application
         {
             var comanda = comandaRepository.Get(id);
             var taxa = new Taxa(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(taxa, viewModel.quantidade);
+            ItemPedido item = new ItemPedido(taxa, viewModel.quantidade, viewModel.prepararCozinha);
 
             comanda.AdicionarItem(item);
             return SalvarComanda(comanda);

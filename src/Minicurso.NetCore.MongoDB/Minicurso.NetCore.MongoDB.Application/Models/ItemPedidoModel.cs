@@ -10,6 +10,7 @@ namespace Minicurso.NetCore.MongoDB.Application.ViewModels
     {
         public int quantidade;
         public Produto item;
+        public bool prepararCozinha;
         public Tipo tipo;
         public enum Tipo
         {
