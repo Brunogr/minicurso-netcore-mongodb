@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Domain
 {
-    public class ItemCozinha: Entidade
+    public class ItemCozinha : Entidade
     {
         public ItemCozinha(ItemPedido itemPedido, Guid comandaId)
         {
@@ -17,6 +17,16 @@ namespace Minicurso.NetCore.MongoDB.Domain
         public ItemPedido ItemPedido { get; set; }
         public DateTime? DataInicioPreparo { get; set; }
         public DateTime? DataFimPreparo { get; set; }
+        public string TempoPreparo
+        {
+            get
+            {
+                if (DataInicioPreparo != null && DataFimPreparo != null)
+                    return (DataFimPreparo.Value - DataInicioPreparo.Value).ToString();
+
+                return string.Empty;
+            }
+        }
         public Guid ComandaId { get; set; }
         public void IniciarPreparo()
         {
