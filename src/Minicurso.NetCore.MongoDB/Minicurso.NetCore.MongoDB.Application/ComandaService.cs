@@ -10,18 +10,18 @@ using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Application
 {
-    public class ComandaService : IComandaSerive
+    public class ComandaService : IComandaService
     {
-        private readonly IComandaRepository comandaRepository;
+        private readonly IComandaRepository _comandaRepository;
 
         public ComandaService(IComandaRepository comandaRepository)
         {
-            this.comandaRepository = comandaRepository;
+            _comandaRepository = comandaRepository;
         }
 
         public Comanda AdicionarProduto(Guid id, ItemPedidoModel viewModel)
         {
-            var comanda = comandaRepository.Get(id);
+            var comanda = _comandaRepository.Get(id);
             var produto = new Produto(viewModel.item.Nome, viewModel.item.Valor);
             ItemPedido item = new ItemPedido(produto, viewModel.quantidade, viewModel.prepararCozinha);
 
@@ -32,7 +32,7 @@ namespace Minicurso.NetCore.MongoDB.Application
 
         public Comanda AdicionarDesconto(Guid id, ItemPedidoModel viewModel)
         {
-            var comanda = comandaRepository.Get(id);
+            var comanda = _comandaRepository.Get(id);
             var desconto = new Desconto(viewModel.item.Nome, viewModel.item.Valor);
             ItemPedido item = new ItemPedido(desconto, viewModel.quantidade, viewModel.prepararCozinha);
 
@@ -42,7 +42,7 @@ namespace Minicurso.NetCore.MongoDB.Application
         }
         public Comanda AdicionarTaxa(Guid id, ItemPedidoModel viewModel)
         {
-            var comanda = comandaRepository.Get(id);
+            var comanda = _comandaRepository.Get(id);
             var taxa = new Taxa(viewModel.item.Nome, viewModel.item.Valor);
             ItemPedido item = new ItemPedido(taxa, viewModel.quantidade, viewModel.prepararCozinha);
 
@@ -52,13 +52,13 @@ namespace Minicurso.NetCore.MongoDB.Application
 
         private Comanda SalvarComanda(Comanda comanda)
         {
-            comandaRepository.Update(comanda);
+            _comandaRepository.Update(comanda);
             return comanda;
         }
 
         public Comanda CriarComanda(CriarComandaModel viewModel)
         {
-            var comandaExistente = comandaRepository.GetByFilter(c => c.Mesa == viewModel.Mesa && c.Atendente.Id == viewModel.atendente.Id);
+            var comandaExistente = _comandaRepository.GetByFilter(c => c.Mesa == viewModel.Mesa && c.Atendente.Id == viewModel.atendente.Id);
 
             if (comandaExistente.Any())
                 throw new Exception("Comanda existente!");
@@ -66,20 +66,53 @@ namespace Minicurso.NetCore.MongoDB.Application
             var atendente = new Atendente(viewModel.atendente.Nome, viewModel.atendente.Cpf);
             var comanda = new Comanda(viewModel.Mesa, atendente);
 
-            comandaRepository.Insert(comanda);
+            _comandaRepository.Insert(comanda);
 
             return comanda;
         }
 
         public Comanda EfetuarPagamento(Guid id, decimal valor)
         {
-            var comanda = comandaRepository.Get(id);
+            var comanda = _comandaRepository.Get(id);
 
             comanda.EfetuarPagamento(valor);
 
-            comandaRepository.Update(comanda);
+            _comandaRepository.Update(comanda);
 
             return comanda;
+        }
+        public Comanda IniciarPreparoCozinha(Guid id, Guid cozinhaId)
+        {
+            var comanda = _comandaRepository.Get(id);
+
+            comanda.Cozinha.Single(c=>c.Id == cozinhaId).IniciarPreparo();
+
+            _comandaRepository.Update(comanda);
+
+            return comanda;
+        }
+        public Comanda FinalizarPreparoCozinha(Guid id, Guid cozinhaId)
+        {
+            var comanda = _comandaRepository.Get(id);
+
+            comanda.Cozinha.Single(c => c.Id == cozinhaId).FinalizarPreparo();
+
+            _comandaRepository.Update(comanda);
+
+            return comanda;
+        }
+
+        public List<ItemCozinha> GetCozinha()
+        {
+            var comandas = _comandaRepository.GetAll();
+            var cozinha = new List<ItemCozinha>();
+
+            foreach (var comanda in comandas)
+            {
+                cozinha.AddRange(comanda.Cozinha);
+            }
+
+            return cozinha;
         }
     }
 }

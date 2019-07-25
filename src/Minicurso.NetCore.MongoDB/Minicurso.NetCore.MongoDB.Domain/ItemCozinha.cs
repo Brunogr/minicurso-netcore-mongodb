@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Minicurso.NetCore.MongoDB.Domain.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Minicurso.NetCore.MongoDB.Domain
 {
-    public class ItemCozinha
+    public class ItemCozinha: Entidade
     {
         public ItemCozinha(ItemPedido itemPedido, Guid comandaId)
         {

@@ -14,13 +14,13 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
     [Route("api/v1/[controller]")]
     public class ComandaController : Controller
     {
-        IComandaSerive _pedidoService;
-        IComandaRepository _pedidoRepository;
+        IComandaService _comandaService;
+        IComandaRepository _comandaRepository;
 
-        public ComandaController(IComandaSerive pedidoService, IComandaRepository pedidoRepository)
+        public ComandaController(IComandaService comandaService, IComandaRepository comandaRepository)
         {
-            _pedidoService = pedidoService;
-            _pedidoRepository = pedidoRepository;
+            _comandaService = comandaService;
+            _comandaRepository = comandaRepository;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         [HttpGet]
         public List<Comanda> Get()
         {
-            return _pedidoRepository.GetAll();
+            return _comandaRepository.GetAll();
         }
 
         /// <summary>
@@ -40,7 +40,13 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         [HttpGet("Mesa/{numeroMesa}")]
         public List<Comanda> GetAtivos(int numeroMesa)
         {
-            return _pedidoRepository.GetByFilter(p => p.Mesa == numeroMesa && p.Ativo);
+            return _comandaRepository.GetByFilter(p => p.Mesa == numeroMesa && p.Ativo);
+        }
+
+        [HttpGet("Cozinha")]
+        public List<ItemCozinha> GetCozinha()
+        {
+            return _comandaService.GetCozinha();
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         [HttpGet("Mesa/{numeroMesa}/Fechado")]
         public List<Comanda> GetFechados(int numeroMesa)
         {
-            return _pedidoRepository.GetByFilter(p => p.Mesa == numeroMesa && !p.Ativo);
+            return _comandaRepository.GetByFilter(p => p.Mesa == numeroMesa && !p.Ativo);
         }
 
         /// <summary>
@@ -61,14 +67,14 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         [HttpGet("{id}")]
         public Comanda Get(Guid id)
         {
-            return _pedidoRepository.Get(id);
+            return _comandaRepository.Get(id);
         }
 
         // POST api/values
         [HttpPost]
         public Comanda Post([FromBody]CriarComandaModel value)
         {
-            return _pedidoService.CriarComanda(value);
+            return _comandaService.CriarComanda(value);
         }
 
         /// <summary>
@@ -77,32 +83,44 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         /// <param name="id">Id do pedido.</param>
         /// <param name="itemPedido">Item a ser adicionado.</param>
         /// <returns></returns>
-        [HttpPut("{id}/Item")]
+        [HttpPut("{id}/ItemPedido")]
         public Comanda Put(Guid id, [FromBody]ItemPedidoModel itemPedido)
         {
             switch (itemPedido.tipo)
             {
                 case ItemPedidoModel.Tipo.Desconto:
-                    return _pedidoService.AdicionarDesconto(id, itemPedido);
+                    return _comandaService.AdicionarDesconto(id, itemPedido);
                 case ItemPedidoModel.Tipo.Taxa:
-                    return _pedidoService.AdicionarTaxa(id, itemPedido);
+                    return _comandaService.AdicionarTaxa(id, itemPedido);
                 case ItemPedidoModel.Tipo.Produto:
                 default:
-                    return _pedidoService.AdicionarProduto(id, itemPedido);
+                    return _comandaService.AdicionarProduto(id, itemPedido);
             }
         }
 
         [HttpPut("{id}/Pagar/{valor}")]
         public Comanda Put(Guid id, decimal valor)
         {
-            return _pedidoService.EfetuarPagamento(id, valor);
+            return _comandaService.EfetuarPagamento(id, valor);
+        }
+
+        [HttpPut("{id}/IniciarPreparo/{cozinhaId}")]
+        public Comanda PutIniciarPreparo(Guid id, Guid cozinhaId)
+        {
+            return _comandaService.IniciarPreparoCozinha(id, cozinhaId);
+        }
+
+        [HttpPut("{id}/FinalizarPreparo/{cozinhaId}")]
+        public Comanda PutFinalizarPreparo(Guid id, Guid cozinhaId)
+        {
+            return _comandaService.FinalizarPreparoCozinha(id, cozinhaId);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public bool Delete(Guid id)
         {
-            return _pedidoRepository.Delete(id);
+            return _comandaRepository.Delete(id);
         }
     }
 }

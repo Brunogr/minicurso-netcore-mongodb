@@ -21,4 +21,6 @@
     <ProjectReference Include="..\Minicurso.NetCore.MongoDB.Application\Minicurso.NetCore.MongoDB.Application.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

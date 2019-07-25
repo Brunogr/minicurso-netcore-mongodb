@@ -21,6 +21,7 @@ namespace Minicurso.NetCore.MongoDB.Domain
             Ativo = true;
             DataFechamento = null;
             Pedidos = new List<ItemPedido>();
+            Cozinha = new List<ItemCozinha>();
         }
 
         public int Mesa { get; private set; }
@@ -53,12 +54,20 @@ namespace Minicurso.NetCore.MongoDB.Domain
             var pedido = Pedidos.SingleOrDefault(p => p.Item.Nome == item.Item.Nome);
 
             if (pedido != null)
+            {
                 pedido.Quantidade += item.Quantidade;
+
+                if (pedido.PrepararCozinha)
+                    AdicionarItemCozinha(new ItemCozinha(pedido, Id));
+            }
             else
+            {
                 Pedidos.Add(item);
 
-            if (pedido.PrepararCozinha)
-                AdicionarItemCozinha(new ItemCozinha(pedido, Id));
+                if (item.PrepararCozinha)
+                    AdicionarItemCozinha(new ItemCozinha(item, Id));
+            }
+
         }
 
         public void AdicionarItemCozinha(ItemCozinha item)

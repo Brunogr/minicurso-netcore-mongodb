@@ -20,6 +20,7 @@ namespace Minicurso.NetCore.MongoDB.Infra.Data
         {
             return Builders<Comanda>.Update
                 .Set(u => u.Pedidos, entidade.Pedidos)
+                .Set(u => u.Cozinha, entidade.Cozinha)
                 .Set(u => u.Ativo, entidade.Ativo)
                 .Set(u => u.Mesa, entidade.Mesa)
                 .Set(u => u.ValorPago, entidade.ValorPago);
