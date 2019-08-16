@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddScoped<IDbConnection, DbConnection>();
             services.AddScoped<IComandaRepository, ComandaRepository>();
+            services.AddScoped<ICozinhaRepository, CozinhaRepository>();
             services.AddSingleton(configuration);
             return services;
         }

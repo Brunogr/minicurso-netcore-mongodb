@@ -7,14 +7,14 @@ namespace Minicurso.NetCore.MongoDB.Domain
 {
     public class ItemCozinha : Entidade
     {
-        public ItemCozinha(ItemPedido itemPedido, Guid comandaId)
+        public ItemCozinha(Produto produto, Guid comandaId)
         {
-            ItemPedido = itemPedido;
+            Produto = produto;
             ComandaId = comandaId;
-            ItemPedido.Status = ItemPedido.EStatusPedido.FilaEspera;
+            Produto.Status = EStatusPedido.FilaEspera;
         }
 
-        public ItemPedido ItemPedido { get; set; }
+        public Produto Produto { get; set; }
         public DateTime? DataInicioPreparo { get; set; }
         public DateTime? DataFimPreparo { get; set; }
         public string TempoPreparo
@@ -31,13 +31,13 @@ namespace Minicurso.NetCore.MongoDB.Domain
         public void IniciarPreparo()
         {
             DataInicioPreparo = DateTime.Now;
-            ItemPedido.Status = ItemPedido.EStatusPedido.EmPreparo;
+            Produto.Status = EStatusPedido.EmPreparo;
         }
 
         public void FinalizarPreparo()
         {
             DataFimPreparo = DateTime.Now;
-            ItemPedido.Status = ItemPedido.EStatusPedido.Finalizado;
+            Produto.Status = EStatusPedido.Finalizado;
         }
     }
 }

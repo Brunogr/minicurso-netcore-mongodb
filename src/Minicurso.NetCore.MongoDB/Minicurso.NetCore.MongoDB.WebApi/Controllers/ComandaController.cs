@@ -43,11 +43,6 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
             return _comandaRepository.GetByFilter(p => p.Mesa == numeroMesa && p.Ativo);
         }
 
-        [HttpGet("Cozinha")]
-        public List<ItemCozinha> GetCozinha()
-        {
-            return _comandaService.GetCozinha();
-        }
 
         /// <summary>
         /// Retorna todos os pedidos fechados.
@@ -78,42 +73,46 @@ namespace Minicurso.NetCore.MongoDB.WebApi.Controllers
         }
 
         /// <summary>
-        /// Método para adicionar um item a comanda.
+        /// Método para adicionar produto na comanda
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="itemPedido"></param>
+        /// <returns></returns>
+        [HttpPut("{id}/Produto")]
+        public Comanda PutProduto(Guid id, [FromBody]ItemPedidoModel itemPedido)
+        {
+            return _comandaService.AdicionarItem(id, itemPedido, Domain.Enum.ETipoItem.Produto);
+        }
+
+        /// <summary>
+        /// Método para adicionar desconto na comanda.
         /// </summary>
         /// <param name="id">Id do pedido.</param>
         /// <param name="itemPedido">Item a ser adicionado.</param>
         /// <returns></returns>
-        [HttpPut("{id}/ItemPedido")]
-        public Comanda Put(Guid id, [FromBody]ItemPedidoModel itemPedido)
+        [HttpPut("{id}/Desconto")]
+        public Comanda PutDesconto(Guid id, [FromBody]ItemPedidoModel itemPedido)
         {
-            switch (itemPedido.tipo)
-            {
-                case ItemPedidoModel.Tipo.Desconto:
-                    return _comandaService.AdicionarDesconto(id, itemPedido);
-                case ItemPedidoModel.Tipo.Taxa:
-                    return _comandaService.AdicionarTaxa(id, itemPedido);
-                case ItemPedidoModel.Tipo.Produto:
-                default:
-                    return _comandaService.AdicionarProduto(id, itemPedido);
-            }
+            return _comandaService.AdicionarItem(id, itemPedido, Domain.Enum.ETipoItem.Desconto) ;
+
+        }
+
+        /// <summary>
+        /// Método para adicionar taxa na comanda
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="itemPedido"></param>
+        /// <returns></returns>
+        [HttpPut("{id}/Taxa")]
+        public Comanda PutTaxa(Guid id, [FromBody]ItemPedidoModel itemPedido)
+        {
+            return _comandaService.AdicionarItem(id, itemPedido, Domain.Enum.ETipoItem.Taxa);
         }
 
         [HttpPut("{id}/Pagar/{valor}")]
         public Comanda Put(Guid id, decimal valor)
         {
             return _comandaService.EfetuarPagamento(id, valor);
-        }
-
-        [HttpPut("{id}/IniciarPreparo/{cozinhaId}")]
-        public Comanda PutIniciarPreparo(Guid id, Guid cozinhaId)
-        {
-            return _comandaService.IniciarPreparoCozinha(id, cozinhaId);
-        }
-
-        [HttpPut("{id}/FinalizarPreparo/{cozinhaId}")]
-        public Comanda PutFinalizarPreparo(Guid id, Guid cozinhaId)
-        {
-            return _comandaService.FinalizarPreparoCozinha(id, cozinhaId);
         }
 
         // DELETE api/values/5

@@ -21,7 +21,6 @@ namespace Minicurso.NetCore.MongoDB.Domain
             Ativo = true;
             DataFechamento = null;
             Pedidos = new List<ItemPedido>();
-            Cozinha = new List<ItemCozinha>();
         }
 
         public int Mesa { get; private set; }
@@ -29,7 +28,6 @@ namespace Minicurso.NetCore.MongoDB.Domain
         public DateTime DataAbertura { get; private set; }
         public DateTime? DataFechamento { get; private set; }
         public List<ItemPedido> Pedidos { get; private set; }
-        public List<ItemCozinha> Cozinha { get; private set; }
         public bool Ativo { get; private set; }
         public decimal ValorTotal
         {
@@ -37,8 +35,29 @@ namespace Minicurso.NetCore.MongoDB.Domain
             {
                 decimal total = 0;
 
+
                 if (Pedidos != null)
-                    total = Math.Round(Pedidos.Sum(p => p.Valor), 2);
+                {
+                    total = Math.Round(Pedidos.Where(a => a.Item is Produto).Sum(p => p.Valor), 2);
+                    var descontos = Pedidos.Where(p => p.Item is Desconto).Select(p => p.Item);
+
+                    foreach (Desconto desconto in descontos)
+                    {
+                        if (desconto.Porcentagem)
+                            total -= ((desconto.Valor / 100) * total);
+                        else
+                            total -= desconto.Valor;
+                    }
+                    var taxas = Pedidos.Where(p => p.Item is Taxa).Select(p => p.Item);
+
+                    foreach (Taxa taxa in taxas)
+                    {
+                        if (taxa.Porcentagem)
+                            total *= ((taxa.Valor / 100) + 1);
+                        else
+                            total += taxa.Valor;
+                    }
+                }
 
                 return total;
             }
@@ -56,26 +75,12 @@ namespace Minicurso.NetCore.MongoDB.Domain
             if (pedido != null)
             {
                 pedido.Quantidade += item.Quantidade;
-
-                if (pedido.PrepararCozinha)
-                    AdicionarItemCozinha(new ItemCozinha(pedido, Id));
             }
             else
             {
                 Pedidos.Add(item);
-
-                if (item.PrepararCozinha)
-                    AdicionarItemCozinha(new ItemCozinha(item, Id));
             }
 
-        }
-
-        public void AdicionarItemCozinha(ItemCozinha item)
-        {
-            if (!Ativo)
-                throw new Exception("A Comanda já foi fechada!");
-
-            Cozinha.Add(item);
         }
 
         public void RemoverItem(ItemPedido item)

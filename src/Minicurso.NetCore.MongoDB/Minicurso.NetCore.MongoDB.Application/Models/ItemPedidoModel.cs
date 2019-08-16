@@ -9,14 +9,14 @@ namespace Minicurso.NetCore.MongoDB.Application.ViewModels
     public class ItemPedidoModel
     {
         public int quantidade;
-        public Produto item;
+        public Item item;
         public bool prepararCozinha;
-        public Tipo tipo;
-        public enum Tipo
+        public bool porcentagem;
+
+        public class Item
         {
-            Produto = 1,
-            Desconto = 2,
-            Taxa = 3
+            public string nome;
+            public decimal valor;
         }
     }
 }

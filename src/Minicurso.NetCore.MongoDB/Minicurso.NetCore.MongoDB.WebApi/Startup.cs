@@ -10,8 +10,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Minicurso.NetCore.MongoDB.Application;
 using Minicurso.NetCore.MongoDB.Application.Interface;
+using Minicurso.NetCore.MongoDB.Domain;
 using Minicurso.NetCore.MongoDB.Infra.Data;
 using Minicurso.NetCore.MongoDB.Infra.Data.Interfaces;
+using MongoDB.Bson.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Minicurso.NetCore.MongoDB.WebApi

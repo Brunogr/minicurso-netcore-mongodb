@@ -1,6 +1,7 @@
 ﻿using Minicurso.NetCore.MongoDB.Application.Interface;
 using Minicurso.NetCore.MongoDB.Application.ViewModels;
 using Minicurso.NetCore.MongoDB.Domain;
+using Minicurso.NetCore.MongoDB.Domain.Enum;
 using Minicurso.NetCore.MongoDB.Domain.Interface;
 using Minicurso.NetCore.MongoDB.Infra.Data.Interfaces;
 using System;
@@ -19,38 +20,32 @@ namespace Minicurso.NetCore.MongoDB.Application
             _comandaRepository = comandaRepository;
         }
 
-        public Comanda AdicionarProduto(Guid id, ItemPedidoModel viewModel)
+        public Comanda AdicionarItem(Guid id, ItemPedidoModel itemPedidoModel, ETipoItem tipoItem)
         {
             var comanda = _comandaRepository.Get(id);
-            var produto = new Produto(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(produto, viewModel.quantidade, viewModel.prepararCozinha);
+            IItem item;
+            switch (tipoItem)
+            {
+                case ETipoItem.Produto:
+                default:
+                    item = new Produto(itemPedidoModel.item.nome, itemPedidoModel.item.valor, itemPedidoModel.prepararCozinha);
+                    break;
+                case ETipoItem.Desconto:
+                    item = new Desconto(itemPedidoModel.item.nome, itemPedidoModel.item.valor, itemPedidoModel.porcentagem);
+                    break;
+                case ETipoItem.Taxa:
+                    item = new Taxa(itemPedidoModel.item.nome, itemPedidoModel.item.valor, itemPedidoModel.porcentagem);
+                    break;
+            }
 
-            comanda.AdicionarItem(item);
+            var itemPedido = new ItemPedido(item, itemPedidoModel.quantidade);
 
-            return SalvarComanda(comanda);
+            comanda.AdicionarItem(itemPedido);
+
+            return AtualizarComanda(comanda);
         }
 
-        public Comanda AdicionarDesconto(Guid id, ItemPedidoModel viewModel)
-        {
-            var comanda = _comandaRepository.Get(id);
-            var desconto = new Desconto(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(desconto, viewModel.quantidade, viewModel.prepararCozinha);
-
-            comanda.AdicionarItem(item);
-
-            return SalvarComanda(comanda);
-        }
-        public Comanda AdicionarTaxa(Guid id, ItemPedidoModel viewModel)
-        {
-            var comanda = _comandaRepository.Get(id);
-            var taxa = new Taxa(viewModel.item.Nome, viewModel.item.Valor);
-            ItemPedido item = new ItemPedido(taxa, viewModel.quantidade, viewModel.prepararCozinha);
-
-            comanda.AdicionarItem(item);
-            return SalvarComanda(comanda);
-        }
-
-        private Comanda SalvarComanda(Comanda comanda)
+        private Comanda AtualizarComanda(Comanda comanda)
         {
             _comandaRepository.Update(comanda);
             return comanda;
@@ -81,38 +76,6 @@ namespace Minicurso.NetCore.MongoDB.Application
 
             return comanda;
         }
-        public Comanda IniciarPreparoCozinha(Guid id, Guid cozinhaId)
-        {
-            var comanda = _comandaRepository.Get(id);
-
-            comanda.Cozinha.Single(c=>c.Id == cozinhaId).IniciarPreparo();
-
-            _comandaRepository.Update(comanda);
-
-            return comanda;
-        }
-        public Comanda FinalizarPreparoCozinha(Guid id, Guid cozinhaId)
-        {
-            var comanda = _comandaRepository.Get(id);
-
-            comanda.Cozinha.Single(c => c.Id == cozinhaId).FinalizarPreparo();
-
-            _comandaRepository.Update(comanda);
-
-            return comanda;
-        }
-
-        public List<ItemCozinha> GetCozinha()
-        {
-            var comandas = _comandaRepository.GetAll();
-            var cozinha = new List<ItemCozinha>();
-
-            foreach (var comanda in comandas)
-            {
-                cozinha.AddRange(comanda.Cozinha);
-            }
-
-            return cozinha;
-        }
+        
     }
 }
